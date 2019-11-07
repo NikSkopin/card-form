@@ -2,12 +2,54 @@
 
 body {
   background: #ddeefc;
-  font-family: 'Source Sans Pro', sans-serif;
+  // font-family: 'Source Sans Pro', sans-serif;
   font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 * {
   box-sizing: border-box;
   &:focus {
     outline: none;
   }
+}
+
+.wrapper {
+  max-width: 800px;
+  // padding: 50px 0;
+}
+
+.cardForm {
+  background-color: #fff;
+  width: 100%;
+  padding: 10px 30px;
+
+  .formFieldYear {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  button {
+    width: 100%;
+    background: #2364d2;
+  }
+}
+
+.cardImage {
+  width: 100%;
+  max-width: 430px;
+  height: 270px;
+  margin: 0 auto;
+  border-radius: 15px;
+  background-color: #1144aa;
+  box-shadow: 0 20px 60px 0 rgba(14, 42, 90, 0.55);
+  background: url('images/6.jpeg');
+  background-position: center;
+  z-index: 10;
+
+  // &_side {
+  //   overflow: hidden;
+  //   height: 100%;
+  // }
 }
