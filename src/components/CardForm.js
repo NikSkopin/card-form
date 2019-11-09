@@ -1,65 +1,112 @@
 import React from 'react'
-import { Button, Input, Form, Select } from 'semantic-ui-react'
+import Card from './Card'
 
 class CardForm extends React.Component {
-  state = {}
+  constructor(props) {
+    super(props)
+    this.state = {
+      number: '################',
+      name: 'FULL NAME',
+      expDateMonth: 'MM',
+      expDateYear: 'YY',
+      cvv: ''
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.makeOptionsList = this.makeOptionsList.bind(this)
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target
+    this.setState({ [name]: value })
+  }
+
+  //TODO: may be there is a better way to do it
+  makeOptionsList(array) {
+    const optionsList = array.map(item => {
+      return (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      )
+    })
+    return optionsList
+  }
+
   render() {
     const months = [
-      { text: '01', value: '01' },
-      { text: '02', value: '02' },
-      { text: '03', value: '03' },
-      { text: '04', value: '04' },
-      { text: '05', value: '05' },
-      { text: '06', value: '06' },
-      { text: '07', value: '07' },
-      { text: '08', value: '08' },
-      { text: '09', value: '09' },
-      { text: '10', value: '10' },
-      { text: '11', value: '11' },
-      { text: '12', value: '12' }
+      '01',
+      '02',
+      '03',
+      '04',
+      '05',
+      '06',
+      '07',
+      '08',
+      '09',
+      '10',
+      '11',
+      '12'
     ]
     const years = [
-      { text: '2019', value: '2019' },
-      { text: '2020', value: '2020' },
-      { text: '2021', value: '2021' },
-      { text: '2022', value: '2022' },
-      { text: '2023', value: '2023' },
-      { text: '2024', value: '2024' },
-      { text: '2025', value: '2025' },
-      { text: '2026', value: '2026' },
-      { text: '2027', value: '2027' },
-      { text: '2028', value: '2028' },
-      { text: '2029', value: '2029' },
-      { text: '2030', value: '2030' }
+      '2019',
+      '2020',
+      '2021',
+      '2022',
+      '2023',
+      '2024',
+      '2025',
+      '2026',
+      '2027',
+      '2028',
+      '2029',
+      '2030'
     ]
+    const optionsMonths = this.makeOptionsList(months)
+    const optionsYears = this.makeOptionsList(years)
+
     return (
-      <div className='cardForm'>
-        <Form>
-          <Form.Field>
-            <label>Card Number</label>
-            <input />
-          </Form.Field>
-          <Form.Field>
-            <label>Card Name</label>
-            <input />
-          </Form.Field>
-          <Form.Group widths='equal'>
-            <Form.Field
-              label='Expiration Date'
-              placeholder='Month'
-              control={Select}
-              options={months}
-            />
-            <Form.Field
-              placeholder='Year'
-              control={Select}
-              options={years}
-              className='formFieldYear'
-            />
-            <Form.Field control={Input} label='CVV' />
-          </Form.Group>
-          <Button type='submit'>Submit</Button>
-        </Form>
+      <div>
+        <Card data={this.state} />
+        <div className='cardForm'>
+          <form action=''>
+            <div className='cardForm_number'>
+              <label htmlFor='number'>Card Number</label>
+              <input type='text' name='number' onChange={this.handleChange} />
+            </div>
+            <div className='cardForm_name'>
+              <label htmlFor='name'>Card Name</label>
+              <input type='text' name='name' onChange={this.handleChange} />
+            </div>
+            <div className='cardForm_dates'>
+              <label htmlFor='expDateMonth'>Expiration Date</label>
+              <select
+                name='expDateMonth'
+                id='expDateMonth'
+                defaultValue='month'
+                onChange={this.handleChange}
+              >
+                <option value='month' disabled>
+                  Month
+                </option>
+                {optionsMonths}
+              </select>
+              <select
+                name='expDateYear'
+                id='expDateYear'
+                defaultValue='year'
+                onChange={this.handleChange}
+              >
+                <option value='year' disabled>
+                  Year
+                </option>
+                {optionsYears}
+              </select>
+              <label htmlFor='cvv'>CVV</label>
+              <input type='text' name='cvv' onChange={this.handleChange} />
+            </div>
+          </form>
+        </div>
       </div>
     )
   }
