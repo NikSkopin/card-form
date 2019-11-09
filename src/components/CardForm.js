@@ -69,42 +69,52 @@ class CardForm extends React.Component {
       <div>
         <Card data={this.state} />
         <div className='cardForm'>
-          <form action=''>
-            <div className='cardForm_number'>
+          <form action='' className='cardForm_form'>
+            <div className='cardForm_number cardForm_label'>
               <label htmlFor='number'>Card Number</label>
               <input type='text' name='number' onChange={this.handleChange} />
             </div>
-            <div className='cardForm_name'>
+            <div className='cardForm_name cardForm_label'>
               <label htmlFor='name'>Card Name</label>
               <input type='text' name='name' onChange={this.handleChange} />
             </div>
-            <div className='cardForm_dates'>
-              <label htmlFor='expDateMonth'>Expiration Date</label>
-              <select
-                name='expDateMonth'
-                id='expDateMonth'
-                defaultValue='month'
-                onChange={this.handleChange}
-              >
-                <option value='month' disabled>
-                  Month
-                </option>
-                {optionsMonths}
-              </select>
-              <select
-                name='expDateYear'
-                id='expDateYear'
-                defaultValue='year'
-                onChange={this.handleChange}
-              >
-                <option value='year' disabled>
-                  Year
-                </option>
-                {optionsYears}
-              </select>
-              <label htmlFor='cvv'>CVV</label>
-              <input type='text' name='cvv' onChange={this.handleChange} />
+            <div className='cardForm_cardData '>
+              <div className='cardForm_cardData__dates cardForm_label'>
+                <label htmlFor='expDateMonth'>Expiration Date</label>
+
+                <div className='cardForm_cardData_selectors'>
+                  <select
+                    name='expDateMonth'
+                    id='expDateMonth'
+                    defaultValue='month'
+                    onChange={this.handleChange}
+                  >
+                    <option value='month' disabled>
+                      Month
+                    </option>
+                    {optionsMonths}
+                  </select>
+                  {/* </div> */}
+                  {/* <div className='cardForm_dates_year'> */}
+                  <select
+                    name='expDateYear'
+                    id='expDateYear'
+                    defaultValue='year'
+                    onChange={this.handleChange}
+                  >
+                    <option value='year' disabled>
+                      Year
+                    </option>
+                    {optionsYears}
+                  </select>
+                </div>
+              </div>
+              <div className='cardForm_cvv cardForm_label'>
+                <label htmlFor='cvv'>CVV</label>
+                <input type='text' name='cvv' onChange={this.handleChange} />
+              </div>
             </div>
+            <button type='submit'>Submit</button>
           </form>
         </div>
       </div>

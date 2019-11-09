@@ -16,23 +16,79 @@ body {
 }
 
 .wrapper {
-  max-width: 800px;
-  // padding: 50px 0;
+  width: 570px;
 }
 
 .cardForm {
   background-color: #fff;
   width: 100%;
-  padding: 10px 30px;
+  padding: 180px 30px 20px 30px;
+  border-radius: 10px;
+  position: relative;
 
-  .formFieldYear {
+  select,
+  input {
+    height: 50px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: none;
+    border: 1px solid #ced6e0;
+    transition: all 0.3s ease-in-out;
+    font-size: 18px;
+    padding: 5px 15px;
+    background: none;
+    color: #1a3b5d;
+    font-family: 'Source Sans Pro', sans-serif;
+
+    &:hover,
+    &:focus {
+      border-color: #3d9cff;
+    }
+
+    &:focus {
+      box-shadow: 0px 10px 20px -13px rgba(32, 56, 117, 0.35);
+    }
+  }
+
+  label {
+    margin-bottom: 5px;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a3b5d;
+    width: 100%;
+    display: block;
+    user-select: none;
+  }
+  &_cvv {
+    width: 150px;
+  }
+
+  &_cardData {
     display: flex;
-    align-items: flex-end;
+    flex-direction: row;
+    justify-content: space-between;
+
+    select {
+      width: 150px;
+      margin-right: 20px;
+    }
   }
 
   button {
     width: 100%;
     background: #2364d2;
+    height: 55px;
+    border: none;
+    border-radius: 5px;
+    font-size: 22px;
+    font-weight: 500;
+    font-family: 'Source Sans Pro', sans-serif;
+    box-shadow: 3px 10px 20px 0px rgba(35, 100, 210, 0.3);
+    color: #fff;
+    margin-top: 20px;
+    cursor: pointer;
   }
 }
 
@@ -46,17 +102,18 @@ body {
   box-shadow: 0 20px 60px 0 rgba(14, 42, 90, 0.55);
   background: url('images/6.jpeg');
   background-position: center;
-  z-index: 10;
+  margin-bottom: -130px;
+  z-index: 5;
+  position: relative;
 
-  // &_side {
-  //   overflow: hidden;
-  //   height: 100%;
-  // }
+  &_side {
+    overflow: hidden;
+    height: 100%;
+  }
   &_wrapper {
     font-family: 'Source Code Pro', monospace;
     padding: 25px 15px;
     position: relative;
-    z-index: 4;
     height: 100%;
     text-shadow: 7px 6px 10px rgba(14, 42, 90, 0.8);
     user-select: none;
