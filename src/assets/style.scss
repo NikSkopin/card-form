@@ -109,14 +109,30 @@ body {
   &_side {
     overflow: hidden;
     height: 100%;
+    &_front {
+      height: 100%;
+      display: none;
+    }
+    &_back {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      // transform: perspective(2000px) rotateY(-180deg) rotateX(0deg) rotate(0deg);
+      z-index: 2;
+      padding: 0;
+      height: 100%;
+    }
   }
   &_wrapper {
     font-family: 'Source Code Pro', monospace;
     padding: 25px 15px;
-    position: relative;
     height: 100%;
     text-shadow: 7px 6px 10px rgba(14, 42, 90, 0.8);
     user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   &_top {
@@ -141,5 +157,84 @@ body {
       margin-left: auto;
       width: 100%;
     }
+  }
+
+  &_middle {
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    font-size: 27px;
+    margin-bottom: 35px;
+    display: inline-block;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+
+  &_bottom {
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    padding: 0 15px 10px 15px;
+    font-weight: 500;
+    cursor: pointer;
+
+    .card-bottom-text {
+      display: block;
+      opacity: 0.7;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    &_name {
+      font-size: 18px;
+      line-height: 1;
+      white-space: nowrap;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+    }
+  }
+
+  &_band {
+    background: rgba(0, 0, 19, 0.8);
+    width: 100%;
+    height: 50px;
+    margin-top: 30px;
+    position: relative;
+    z-index: 2;
+  }
+
+  &_back_cvv {
+    text-align: right;
+    position: relative;
+    z-index: 2;
+    padding: 15px;
+
+    .cvv_back_title {
+      padding-right: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .cvv_band {
+      height: 45px;
+      background: #fff;
+      margin-bottom: 30px;
+      text-align: right;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 10px;
+      color: #1a3b5d;
+      font-size: 18px;
+      border-radius: 4px;
+      box-shadow: 0px 10px 20px -7px rgba(32, 56, 117, 0.35);
+    }
+  }
+  &_back_type {
+    opacity: 0.7;
   }
 }

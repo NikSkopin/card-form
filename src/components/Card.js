@@ -29,12 +29,33 @@ class Card extends React.Component {
               </div>
               <div className='cardImage_bottom'>
                 <div className='cardImage_bottom_cardHolder'>
-                  <span>{this.props.data.name}</span>
+                  <span className='card-bottom-text'>Card Holder</span>
+                  <span className='cardImage_bottom_name'>
+                    {this.props.data.name}
+                  </span>
                 </div>
                 <div className='cardImage_bottom_expiration'>
+                  <span className='card-bottom-text'>Expires</span>
                   <span>{`${this.props.data.expDateMonth} /
                     ${this.props.data.expDateYear}`}</span>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <div className='cardImage_side_back'>
+            <div className='cardImage_band'></div>
+            <div className='cardImage_back_cvv'>
+              <div className='cvv_back_title'>CVV</div>
+              <div className='cvv_band'>
+                <span>***</span>
+              </div>
+              <div className='cardImage_back_type'>
+                <img
+                  src={visa}
+                  alt='card type'
+                  className='cardImage_top_cardType'
+                />
               </div>
             </div>
           </div>
