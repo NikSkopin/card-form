@@ -9,11 +9,13 @@ class CardForm extends React.Component {
       name: 'FULL NAME',
       expDateMonth: 'MM',
       expDateYear: 'YY',
-      cvv: ''
+      cvv: '',
+      isCvvFocused: false
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.makeOptionsList = this.makeOptionsList.bind(this)
+    this.rotateCard = this.rotateCard.bind(this)
   }
 
   handleChange(event) {
@@ -31,6 +33,14 @@ class CardForm extends React.Component {
       )
     })
     return optionsList
+  }
+
+  rotateCard() {
+    this.setState(prevState => {
+      return {
+        isCvvFocused: !prevState.isCvvFocused
+      }
+    })
   }
 
   render() {
@@ -94,8 +104,6 @@ class CardForm extends React.Component {
                     </option>
                     {optionsMonths}
                   </select>
-                  {/* </div> */}
-                  {/* <div className='cardForm_dates_year'> */}
                   <select
                     name='expDateYear'
                     id='expDateYear'
@@ -111,7 +119,13 @@ class CardForm extends React.Component {
               </div>
               <div className='cardForm_cvv cardForm_label'>
                 <label htmlFor='cvv'>CVV</label>
-                <input type='text' name='cvv' onChange={this.handleChange} />
+                <input
+                  type='text'
+                  name='cvv'
+                  onChange={this.handleChange}
+                  onFocus={this.rotateCard}
+                  onBlur={this.rotateCard}
+                />
               </div>
             </div>
             <button type='submit'>Submit</button>
