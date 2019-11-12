@@ -9,8 +9,7 @@ class Card extends React.Component {
     // console.log(this.props)
 
     const chip = require('../assets/images/chip.png')
-    //TODO: should be an array of images or something
-    const visa = require('../assets/images/visa.png')
+    const visa = require(`../assets/images/${this.props.data.cardType}.png`)
     return (
       <div className='cardImage'>
         <div className='cardImage_side'>
@@ -38,7 +37,11 @@ class Card extends React.Component {
                   <div className='cardImage_bottom_expiration'>
                     <span className='card-bottom-text'>Expires</span>
                     <span>{`${this.props.data.expDateMonth} /
-                    ${this.props.data.expDateYear}`}</span>
+                    ${
+                      this.props.data.expDateYear.length > 2
+                        ? this.props.data.expDateYear.slice(2)
+                        : this.props.data.expDateYear
+                    }`}</span>
                   </div>
                 </div>
               </div>
