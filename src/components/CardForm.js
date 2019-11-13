@@ -11,6 +11,7 @@ class CardForm extends React.Component {
     this.state = {
       number: '#### #### #### ####',
       cardType: 'visa',
+      mask: '',
       name: 'FULL NAME',
       expDateMonth: 'MM',
       expDateYear: 'YY',
@@ -26,9 +27,24 @@ class CardForm extends React.Component {
 
   handleChange = async function(event) {
     const { name, value } = event.target
-    await this.setState({ [name]: value })
+
     if (name === 'number') {
-      this.getCardType()
+      const amexMask = '#### ###### #####'
+      const otherMask = '#### #### #### ####'
+      const numberInput = document.getElementById('card-number')
+
+      const card = this.getCardType(value)
+
+      const mask = card === 'amex' ? amexMask : otherMask
+
+      const formatedValue = this.format(value, mask)
+
+      await this.setState({ number: value, cardType: card })
+
+      numberInput.maxLength = mask.length
+      numberInput.value = formatedValue
+    } else {
+      this.setState({ [name]: value })
     }
   }
 
@@ -44,33 +60,35 @@ class CardForm extends React.Component {
     return optionsList
   }
 
-  getCardType() {
-    let cardNumber = this.state.number
+  getCardType(cardNumber) {
     let re = new RegExp('^4')
     if (cardNumber.match(re) != null) {
-      this.setState({ cardType: 'visa' })
       return 'visa'
     }
 
     re = new RegExp('^(34|37)')
     if (cardNumber.match(re) != null) {
-      this.setState({ cardType: 'amex' })
       return 'amex'
     }
 
     re = new RegExp('^5[1-5]')
     if (cardNumber.match(re) != null) {
-      this.setState({ cardType: 'mastercard' })
       return 'mastercard'
     }
 
     re = new RegExp('^6011')
     if (cardNumber.match(re) != null) {
-      this.setState({ cardType: 'discover' })
       return 'discover'
     }
+    return 'visa'
+  }
 
-    this.setState({ cardType: 'visa' })
+  format(number, mask) {
+    const position = number.length - 1
+    if (mask[position] === ' ') {
+      return [number.slice(0, position), ' ', number.slice(position)].join('')
+    }
+    return number
   }
 
   rotateCard() {
@@ -122,8 +140,10 @@ class CardForm extends React.Component {
               <label htmlFor='number'>Card Number</label>
               <input
                 type='text'
+                autoFocus
                 name='number'
-                maxLength='16'
+                // maxLength='19'
+                id='card-number'
                 onChange={this.handleChange}
               />
             </div>
