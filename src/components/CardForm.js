@@ -1,55 +1,12 @@
 import React from 'react'
 import Card from './Card'
 
-//TODO card type - identify, add separators and display on card and logo
-//TODO animation of rotation and focus
-//TODO polish styling - pseudoelements etc
+// TODO card type - identify, add separators and display on card and logo
+// TODO animation of rotation and focus
+// TODO polish styling - pseudoelements etc
 
 class CardForm extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      number: '#### #### #### ####',
-      cardType: 'visa',
-      mask: '',
-      name: 'FULL NAME',
-      expDateMonth: 'MM',
-      expDateYear: 'YY',
-      cvv: '',
-      isCvvFocused: false
-    }
-
-    this.handleChange = this.handleChange.bind(this)
-    this.makeOptionsList = this.makeOptionsList.bind(this)
-    this.getCardType = this.getCardType.bind(this)
-    this.rotateCard = this.rotateCard.bind(this)
-  }
-
-  handleChange = async function(event) {
-    const { name, value } = event.target
-
-    if (name === 'number') {
-      const amexMask = '#### ###### #####'
-      const otherMask = '#### #### #### ####'
-      const numberInput = document.getElementById('card-number')
-
-      const card = this.getCardType(value)
-
-      const mask = card === 'amex' ? amexMask : otherMask
-
-      const formatedValue = this.format(value, mask)
-
-      await this.setState({ number: value, cardType: card })
-
-      numberInput.maxLength = mask.length
-      numberInput.value = formatedValue
-    } else {
-      this.setState({ [name]: value })
-    }
-  }
-
-  //TODO may be there is a better way to do it
-  makeOptionsList(array) {
+  static makeOptionsList(array) {
     const optionsList = array.map(item => {
       return (
         <option key={item} value={item}>
@@ -60,7 +17,29 @@ class CardForm extends React.Component {
     return optionsList
   }
 
-  getCardType(cardNumber) {
+  constructor(props) {
+    super(props)
+    this.state = {
+      cardData: {
+        // TODO change everything with this object
+        number: '',
+        maskedNumber: '#### #### #### ####',
+        cardType: 'visa',
+        name: 'FULL NAME',
+        expDateMonth: 'MM',
+        expDateYear: 'YY',
+        cvv: ''
+      },
+      isCvvFocused: false
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.rotateCard = this.rotateCard.bind(this)
+  }
+
+  // TODO may be there is a better way to do it
+
+  static getCardType(cardNumber) {
     let re = new RegExp('^4')
     if (cardNumber.match(re) != null) {
       return 'visa'
@@ -83,12 +62,68 @@ class CardForm extends React.Component {
     return 'visa'
   }
 
-  format(number, mask) {
-    const position = number.length - 1
-    if (mask[position] === ' ') {
-      return [number.slice(0, position), ' ', number.slice(position)].join('')
+  async handleChange(event) {
+    const { name, value } = event.target
+    const { cardData } = this.state
+
+    if (name === 'number') {
+      const amexMask = '#### ###### #####'
+      const otherMask = '#### #### #### ####'
+      const numberInput = document.getElementById('card-number')
+
+      const card = this.constructor.getCardType(value)
+
+      const mask = card === 'amex' ? amexMask : otherMask
+
+      const formatedValue = this.format(value, mask)
+
+      await this.setState({
+        cardData: {
+          ...cardData,
+          number: value,
+          cardType: card,
+          maskedNumber: formatedValue.formatedWithMask
+        }
+      })
+
+      numberInput.maxLength = mask.length
+      numberInput.value = formatedValue.formated
+      // TODO add pattern to input according to card type
+    } else {
+      this.setState({
+        cardData: { ...cardData, [name]: value }
+      })
     }
-    return number
+  }
+
+  format(entry, mask) {
+    const position = entry.length
+    let spacer = ''
+    const hashes = mask.slice(position)
+
+    const { cardData } = this.state
+    const { number } = cardData
+
+    entry.trim()
+
+    if (mask[position] === ' ' && entry.length > number.length) {
+      spacer = ' '
+    }
+
+    const formated = [
+      entry.slice(0, position),
+      spacer,
+      entry.slice(position)
+    ].join('')
+
+    const formatedWithMask = [
+      entry.slice(0, position),
+      spacer,
+      entry.slice(position),
+      hashes
+    ].join('')
+
+    return { formated, formatedWithMask }
   }
 
   rotateCard() {
@@ -128,21 +163,21 @@ class CardForm extends React.Component {
       '2029',
       '2030'
     ]
-    const optionsMonths = this.makeOptionsList(months)
-    const optionsYears = this.makeOptionsList(years)
+    const optionsMonths = this.constructor.makeOptionsList(months)
+    const optionsYears = this.constructor.makeOptionsList(years)
+
+    const { cardData, isCvvFocused } = this.state
 
     return (
       <div>
-        <Card data={this.state} />
+        <Card data={cardData} isCvvFocused={isCvvFocused} />
         <div className='cardForm'>
           <form action='' className='cardForm_form'>
             <div className='cardForm_number cardForm_label'>
               <label htmlFor='number'>Card Number</label>
               <input
                 type='text'
-                autoFocus
                 name='number'
-                // maxLength='19'
                 id='card-number'
                 onChange={this.handleChange}
               />
