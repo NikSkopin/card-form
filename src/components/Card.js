@@ -5,7 +5,14 @@ import chip from '../assets/images/chip.png'
 function Card(props) {
   const { data, isCvvFocused } = props
 
-  const { name, number, expDateMonth, expDateYear, cardType } = data
+  const {
+    name,
+
+    expDateMonth,
+    expDateYear,
+    cardType,
+    maskedNumber
+  } = data
 
   // TODO require can not be here
   const cardImg = require(`../assets/images/${cardType}.png`)
@@ -26,7 +33,7 @@ function Card(props) {
                 </div>
               </div>
               <div className='cardImage_middle'>
-                <span>{number}</span>
+                <span>{maskedNumber}</span>
               </div>
               <div className='cardImage_bottom'>
                 <div className='cardImage_bottom_cardHolder'>
@@ -75,7 +82,8 @@ Card.propTypes = {
     number: propTypes.string,
     expDateMonth: propTypes.string,
     expDateYear: propTypes.string,
-    cardType: propTypes.string
+    cardType: propTypes.string,
+    maskedNumber: propTypes.string
   }).isRequired,
   isCvvFocused: propTypes.bool.isRequired
 }

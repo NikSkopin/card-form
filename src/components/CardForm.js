@@ -76,6 +76,8 @@ class CardForm extends React.Component {
       const mask = card === 'amex' ? amexMask : otherMask
 
       const formatedValue = this.format(value, mask)
+      numberInput.maxLength = mask.length
+      numberInput.value = formatedValue.formated
 
       await this.setState({
         cardData: {
@@ -86,8 +88,6 @@ class CardForm extends React.Component {
         }
       })
 
-      numberInput.maxLength = mask.length
-      numberInput.value = formatedValue.formated
       // TODO add pattern to input according to card type
     } else {
       this.setState({
@@ -103,8 +103,6 @@ class CardForm extends React.Component {
 
     const { cardData } = this.state
     const { number } = cardData
-
-    entry.trim()
 
     if (mask[position] === ' ' && entry.length > number.length) {
       spacer = ' '
